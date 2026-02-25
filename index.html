@@ -1,1 +1,292 @@
-<!DOCTYPE html><html><head><title>My Site</title></head><body><h1>Hello World</h1></body></html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Doc's Thoughts</title>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Reenie+Beanie&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #faf6ee;
+      --warm-brown: #3d2b1f;
+      --terrier-tan: #c8a96e;
+      --soft-red: #c0392b;
+      --ink: #2c1810;
+      --paper: #f5efe0;
+    }
+
+    body {
+      background-color: var(--cream);
+      background-image: 
+        radial-gradient(ellipse at 20% 50%, rgba(200, 169, 110, 0.08) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 20%, rgba(192, 57, 43, 0.05) 0%, transparent 50%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+      font-family: 'Caveat', cursive;
+    }
+
+    /* Subtle paper texture lines */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: repeating-linear-gradient(
+        transparent,
+        transparent 31px,
+        rgba(200, 169, 110, 0.15) 31px,
+        rgba(200, 169, 110, 0.15) 32px
+      );
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 580px;
+      text-align: center;
+    }
+
+    .header {
+      margin-bottom: 48px;
+    }
+
+    .dog-icon {
+      font-size: 64px;
+      display: block;
+      margin-bottom: 8px;
+      animation: waggle 3s ease-in-out infinite;
+      filter: drop-shadow(2px 4px 6px rgba(61,43,31,0.15));
+    }
+
+    @keyframes waggle {
+      0%, 100% { transform: rotate(-5deg); }
+      50% { transform: rotate(5deg); }
+    }
+
+    .title {
+      font-family: 'DM Serif Display', serif;
+      font-style: italic;
+      font-size: clamp(36px, 8vw, 64px);
+      color: var(--warm-brown);
+      line-height: 1;
+      letter-spacing: -1px;
+    }
+
+    .subtitle {
+      font-family: 'Caveat', cursive;
+      font-size: 18px;
+      color: var(--terrier-tan);
+      margin-top: 6px;
+      letter-spacing: 1px;
+    }
+
+    /* The thought card */
+    .thought-card {
+      background: var(--paper);
+      border-radius: 4px;
+      padding: 48px 40px;
+      margin: 0 auto 32px;
+      position: relative;
+      box-shadow: 
+        2px 3px 0px rgba(61,43,31,0.08),
+        4px 6px 0px rgba(61,43,31,0.05),
+        0 20px 60px rgba(61,43,31,0.12);
+      transform: rotate(-0.5deg);
+    }
+
+    /* Red margin line */
+    .thought-card::before {
+      content: '';
+      position: absolute;
+      left: 52px;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: rgba(192, 57, 43, 0.3);
+      border-radius: 1px;
+    }
+
+    /* Tape effect at top */
+    .thought-card::after {
+      content: '';
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%) rotate(-1deg);
+      width: 60px;
+      height: 22px;
+      background: rgba(200, 169, 110, 0.35);
+      border-radius: 2px;
+    }
+
+    .thought-text {
+      font-family: 'Caveat', cursive;
+      font-size: clamp(22px, 5vw, 30px);
+      color: var(--ink);
+      line-height: 1.5;
+      min-height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-left: 20px;
+      position: relative;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .thought-text.fade-out {
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+
+    .thought-text.fade-in {
+      animation: fadeIn 0.4s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Opening quote mark */
+    .thought-text::before {
+      content: '"';
+      font-family: 'DM Serif Display', serif;
+      font-size: 80px;
+      color: var(--terrier-tan);
+      opacity: 0.4;
+      position: absolute;
+      top: -20px;
+      left: 10px;
+      line-height: 1;
+    }
+
+    .thought-number {
+      font-family: 'Caveat', cursive;
+      font-size: 13px;
+      color: var(--terrier-tan);
+      margin-top: 20px;
+      letter-spacing: 1px;
+    }
+
+    /* Button */
+    .next-btn {
+      background: var(--warm-brown);
+      color: var(--cream);
+      border: none;
+      padding: 16px 36px;
+      font-family: 'Caveat', cursive;
+      font-size: 22px;
+      border-radius: 100px;
+      cursor: pointer;
+      letter-spacing: 0.5px;
+      box-shadow: 0 4px 0 rgba(61,43,31,0.4), 0 8px 20px rgba(61,43,31,0.2);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      position: relative;
+      top: 0;
+    }
+
+    .next-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 0 rgba(61,43,31,0.4), 0 12px 24px rgba(61,43,31,0.2);
+    }
+
+    .next-btn:active {
+      transform: translateY(2px);
+      box-shadow: 0 2px 0 rgba(61,43,31,0.4), 0 4px 12px rgba(61,43,31,0.2);
+    }
+
+    .next-btn:disabled {
+      opacity: 0.5;
+      cursor: default;
+      transform: none;
+    }
+
+    .footer-note {
+      margin-top: 32px;
+      font-size: 14px;
+      color: var(--terrier-tan);
+      opacity: 0.7;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header">
+    <span class="dog-icon">🐾</span>
+    <h1 class="title">Doc's Thoughts</h1>
+    <p class="subtitle">a west highland terrier's inner life</p>
+  </div>
+
+  <div class="thought-card">
+    <p class="thought-text" id="thoughtText">Loading...</p>
+    <p class="thought-number" id="thoughtNumber"></p>
+  </div>
+
+  <button class="next-btn" id="nextBtn" onclick="nextThought()">another thought →</button>
+
+  <p class="footer-note">Doc, probably.</p>
+</div>
+
+<script>
+  let thoughts = [];
+  let seen = [];
+  let current = null;
+
+  fetch('thoughts.json')
+    .then(r => r.json())
+    .then(data => {
+      thoughts = data;
+      showThought();
+    })
+    .catch(() => {
+      // fallback if fetch fails (e.g. opened locally without server)
+      thoughts = [
+        "That squirrel has been mocking me from the same branch for 47 minutes. This is not over.",
+        "The mail carrier came again. I handled it.",
+        "I have been sitting in this sunbeam for two hours and I regret nothing.",
+        "Someone moved my spot on the couch. I will be staging a formal protest at 3am.",
+        "I heard the word 'bath' from three rooms away. I am already under the bed."
+      ];
+      showThought();
+    });
+
+  function showThought() {
+    const textEl = document.getElementById('thoughtText');
+    const numEl = document.getElementById('thoughtNumber');
+
+    // Reset seen list when all thoughts exhausted
+    if (seen.length >= thoughts.length) seen = [];
+
+    const remaining = thoughts.filter((_, i) => !seen.includes(i));
+    const idx = thoughts.indexOf(remaining[Math.floor(Math.random() * remaining.length)]);
+    seen.push(idx);
+    current = idx;
+
+    textEl.classList.remove('fade-in');
+    textEl.classList.add('fade-out');
+
+    setTimeout(() => {
+      textEl.textContent = thoughts[idx];
+      numEl.textContent = `thought ${seen.length} of ${thoughts.length}`;
+      textEl.classList.remove('fade-out');
+      textEl.classList.add('fade-in');
+    }, 300);
+  }
+
+  function nextThought() {
+    showThought();
+  }
+</script>
+
+</body>
+</html>
