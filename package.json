@@ -1,0 +1,28 @@
+{
+  "name": "doc-thoughts",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MatthewWheeler/Doc-Thoughts.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MatthewWheeler/Doc-Thoughts/issues"
+  },
+  "homepage": "https://github.com/MatthewWheeler/Doc-Thoughts#readme",
+  "description": "",
+  "dependencies": {
+    "better-sqlite3": "^12.6.2",
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1",
+    "node-cron": "^4.2.1",
+    "twilio": "^5.12.2"
+  }
+}

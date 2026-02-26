@@ -242,7 +242,7 @@
   let seen = [];
   let current = null;
 
-  fetch('thoughts.json')
+  fetch('/api/thoughts/doc')
     .then(r => r.json())
     .then(data => {
       thoughts = data;
