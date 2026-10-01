@@ -7,16 +7,24 @@ const subscriberJoin = require('../handlers/subscriberJoin');
 const unknownSender = require('../handlers/unknownSender');
 
 function twimlReply(res, message) {
+  const twiml = new twilio.twiml.MessagingResponse();
+  twiml.message(message);  // escapes XML
   res.type('text/xml');
-  res.send(`<?xml version="1.0"?><Response><Message>${message}</Message></Response>`);
+  res.send(twiml.toString());
 }
 
 function validateSignature(req, res, next) {
+  // Explicit dev-only opt-out for curl testing
+  if (process.env.SKIP_TWILIO_SIGNATURE === 'true') return next();
+
   const webhookUrl = process.env.WEBHOOK_URL;
   const authToken = process.env.TWILIO_AUTH_TOKEN;
 
-  // Skip validation in dev (no WEBHOOK_URL set)
-  if (!webhookUrl || !authToken) return next();
+  // Fail closed: without these we can't verify the request came from Twilio
+  if (!webhookUrl || !authToken) {
+    console.error('SMS: Rejecting request — WEBHOOK_URL and TWILIO_AUTH_TOKEN must be set (or SKIP_TWILIO_SIGNATURE=true in dev).');
+    return res.status(403).send('Forbidden');
+  }
 
   const signature = req.headers['x-twilio-signature'];
   if (twilio.validateRequest(authToken, signature, webhookUrl, req.body)) {
